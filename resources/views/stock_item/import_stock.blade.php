@@ -173,6 +173,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
 
 </head>
 
@@ -190,71 +191,84 @@
         </ul>
     </div>
 
-    form
+    <!-- form -->
     <div class="content-main-right">
         <form action="" method="post" name="add" class="form-horizontal" id="add">
+            @csrf
             <h1>Import Data Stock Item</h1>
             <p></p>
             <div class="form-group">
                 <div class="col-sm-2 control-label">
-                    Product :
-                </div>
-                <div class="col-sm-2">
-                    <input type="text" name="" id="product" class="form-control" placeholder="ใส่ชื่อรายการของ">
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-2 control-label" class="form-control">
                     Part Number :
                 </div>
                 <div class="col-sm-2">
-                    <input type="text" name="" id="part" class="form-control" placeholder="ใส่ partnumber ของสินค้า">
+                    <input type="text" name="part" id="part" class="form-control" placeholder="Part Number">
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-sm-2 control-label">
-                    จำนวน :
+                    Description :
                 </div>
-                <div class="col-sm-3">
-                    <input type="text" name="" id="number" class="form-control" placeholder="ใส่เป็นตัวเลข">
+                <div class="col-sm-2">
+                    <input type="text" name="description" id="description" class="form-control" placeholder="Description">
                 </div>
             </div>
-
+            <div class="form-group">
+                <div class="col-sm-2 control-label">
+                    Product Group :
+                </div>
+                <div class="col-sm-2">
+                    <input type="text" name="group" id="group" class="form-control" placeholder="Product Group">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2 control-label">
+                    Vendor :
+                </div>
+                <div class="col-sm-2">
+                    <input type="text" name="vendor" id="vendor" class="form-control" placeholder="Vendor">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2 control-label">
+                    Remaining Stock :
+                </div>
+                <div class="col-sm-2">
+                    <input type="text" name="remaining" id="remaining" class="form-control" placeholder="ตัวเลขไม่เกิน 5 ตัว">
+                </div>
+            </div>
         </form>
-
         <div class="form-group">
             <div class="col-sm-2">
             </div>
             <div class="col-sm-3">
-                <input type="button" class="button button1" id="submit" value="เพิ่ม" onclick="add_stock()"></input>
+                <input type="submit" class="button button1" id="submit" value="เพิ่ม" onclick="add_stock()"></input>
                 <a href="/stock"><input type="button" class="button button2" id="submit" value="ยกเลิก"></input></a>
             </div>
         </div>
-    </div>
 
+    </div>
 
 </body>
 
+<script type="text/javascript">
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+</script>
 
 <script>
     function add_stock() {
-        var product = $("#product").val();
-        var part = $("#part").val();
-        var number = $("#number").val();
-
-
-        // var formData = new FormData(document.forms.namedItem("add"));
-
+        var formData = new FormData(document.forms.namedItem("add"));
         $.ajax({
-            url: "test.php",
+            url: "add_stock",
             type: 'POST',
-            data: product,
+            data: formData,
             async: false,
             success: function(data) {
-                $("#show").html("กำลังบันทึกข้อมูล");
-                if (data = "success") {
-                    $("#show").html("<div class='alert alert-success'>&nbsp;&nbsp;&nbsp;บันทึกข้อมูลเรียบร้อย</div>");
-                }
+                alert("บันทึกรายการของเข้าระบบเรียบร้อย");
             },
             cache: false,
             contentType: false,

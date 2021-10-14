@@ -14,7 +14,11 @@ use App\Http\Controllers\stock_item;
 |
 */
 
+//manage page web
 Route::get('/', [stock_item::class, 'Dashboard']);
 Route::get('/stock', [stock_item::class, 'Stock']);
 Route::get('/import_stock', [stock_item::class, 'import_stock']);
 Route::get('/keepvender', [stock_item::class, 'keepvender']);
+
+//Add stock item Accellum Technology
+Route::post('add_stock', [stock_item::class, 'add_stock']);

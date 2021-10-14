@@ -205,33 +205,35 @@
 
         <table class="table table-bordered">
             <tr>
-                <td>ลำดับ</td>
-                <td>Product</td>
-                <td>Part number</td>
-                <td>ตั้งต้น</td>
-                <td>ซื้อเพิ่ม</td>
-                <td>ขายออก</td>
-                <td>คงเหลือ</td>
-                <td>last date</td>
-                <td>ต้องสั่งเพิ่ม</td>
+                <td>Item</td>
+                <td>Part Number</td>
+                <td>Description</td>
+                <td>Product Group</td>
+                <td>Vendor</td>
+                <td>Remaining Stock</td>
+                <td>Receive</td>
+                <td>Sold</td>
+                <td>Balance</td>
+                <td>last_date</td>
             </tr>
 
             <?php
 
-            $users = DB::select('select * from stock_item');
+            $users = DB::select('select * from stock_item LIMIT 10');
 
             foreach ($users as $user) {
             ?>
                 <tr>
                     <td><?php echo $user->id_stock; ?></td>
-                    <td><?php echo $user->name; ?></td>
                     <td><?php echo $user->part_number; ?></td>
-                    <td><?php echo $user->number_first; ?></td>
-                    <td><?php echo $user->buy; ?></td>
-                    <td><?php echo $user->sale; ?></td>
-                    <td><?php echo $user->number_last; ?></td>
+                    <td><?php echo $user->description; ?></td>
+                    <td><?php echo $user->product_group; ?></td>
+                    <td><?php echo $user->vendor; ?></td>
+                    <td><?php echo $user->remaining_stock; ?></td>
+                    <td><?php echo $user->receive; ?></td>
+                    <td><?php echo $user->sold; ?></td>
+                    <td><?php echo $user->balance; ?></td>
                     <td><?php echo $user->edit_date; ?></td>
-                    <td><?php echo $user->status; ?></td>
                 </tr>
             <?php
             }

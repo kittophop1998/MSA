@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class stock_item extends Controller
 {
@@ -29,8 +30,17 @@ class stock_item extends Controller
         return view('stock_item.test');
     }
 
-    public function add_stock()
+    //Add stock item
+    public function add_stock(Request $req)
     {
-        $_POST("product");
+        $part = $req->input('part');
+        $description = $req->input('description');
+        $group = $req->input('group');
+        $vendor = $req->input('vendor');
+        $remaining = $req->input('remaining');
+
+        $date = date("m/d/Y");
+
+        DB::insert("insert into stock_item (part_number, description, product_group, vendor, remaining_stock, edit_date, balance) values ('$part', '$description', '$group', '$vendor', '$remaining', '$date', '0')");
     }
 }
